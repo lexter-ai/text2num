@@ -52,25 +52,25 @@ class TestTextToNumPT(TestCase):
         self.assertEqual(text2num("mil e um", "pt"), 1001)
         self.assertEqual(text2num("dois mil", "pt"), 2000)
         self.assertEqual(text2num("dois mil noventa e nove", "pt"), 2099)
+        self.assertEqual(text2num("nove mil novecentos noventa e nove", "pt"), 9999)
         self.assertEqual(
-            text2num("nove mil novecentos noventa e nove", "pt"), 9999)
-        self.assertEqual(text2num(
-            "novecentos noventa e nove mil novecentos noventa e nove", "pt"), 999999)
+            text2num("novecentos noventa e nove mil novecentos noventa e nove", "pt"),
+            999999,
+        )
 
         self.assertEqual(alpha2digit("um vírgula um", "pt"), "1,1")
-        self.assertEqual(alpha2digit(
-            "um vírgula quatrocentos e um", "pt"), "1,401")
+        self.assertEqual(alpha2digit("um vírgula quatrocentos e um", "pt"), "1,401")
 
         # fail
-#        self.assertEqual(alpha2digit("zero vírgula cinco", "pt"), "0,5")
+        #        self.assertEqual(alpha2digit("zero vírgula cinco", "pt"), "0,5")
 
-    #     test1 = "cincuenta y tres mil veinte millones doscientos cuarenta y tres mil setecientos veinticuatro"
-    #     self.assertEqual(text2num(test1, "pt"), 53_020_243_724)
+        #     test1 = "cincuenta y tres mil veinte millones doscientos cuarenta y tres mil setecientos veinticuatro"
+        #     self.assertEqual(text2num(test1, "pt"), 53_020_243_724)
 
-    #     test2 = (
-    #         "cincuenta y un millones quinientos setenta y ocho mil trescientos dos"
-    #     )
-    #     self.assertEqual(text2num(test2, "pt"), 51_578_302)
+        #     test2 = (
+        #         "cincuenta y un millones quinientos setenta y ocho mil trescientos dos"
+        #     )
+        #     self.assertEqual(text2num(test2, "pt"), 51_578_302)
 
         test3 = "oitenta e cinco"
         self.assertEqual(text2num(test3, "pt"), 85)
@@ -245,9 +245,21 @@ class TestTextToNumPT(TestCase):
         self.assertEqual(alpha2digit(source, "pt", signed=False), expected)
 
     def test_brazilian_multipliers(self):
-        self.assertEqual(text2num("um milhão quatrocentos e trinta e três", "pt"), 1000433)
-        self.assertEqual(text2num("dois milhões oitocentos e quarenta e quatro mil trezentos e trinta e três", "pt"), 2844333)
+        self.assertEqual(
+            text2num("um milhão quatrocentos e trinta e três", "pt"), 1000433
+        )
+        self.assertEqual(
+            text2num(
+                "dois milhões oitocentos e quarenta e quatro mil trezentos e trinta e três",
+                "pt",
+            ),
+            2844333,
+        )
 
-        self.assertEqual(text2num("cinquenta e três bilhões duzentos e quarenta e três mil setecentos e vinte e quatro", "pt"), 53_000_243_724)
-
-
+        self.assertEqual(
+            text2num(
+                "cinquenta e três bilhões duzentos e quarenta e três mil setecentos e vinte e quatro",
+                "pt",
+            ),
+            53_000_243_724,
+        )

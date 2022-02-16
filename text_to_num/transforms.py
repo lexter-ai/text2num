@@ -74,9 +74,7 @@ def text2num(text: str, lang: Union[str, Language], relaxed: bool = False) -> in
     # German
     if type(language) is German:
         # The German number writing rules do not apply to the common order of number processing
-        num_parser = WordStreamValueParserGerman(
-            language, relaxed=relaxed
-        )
+        num_parser = WordStreamValueParserGerman(language, relaxed=relaxed)
         num_parser.parse(text)
         return num_parser.value
     # Default
@@ -108,9 +106,7 @@ def alpha2digit(
         raise Exception("Language not supported")
 
     language = LANG[lang]
-    segments = re.split(
-        r"\s*[\.,;\(\)…\[\]:!\?]+\s*", text
-    )
+    segments = re.split(r"\s*[\.,;\(\)…\[\]:!\?]+\s*", text)
     punct = re.findall(r"\s*[\.,;\(\)…\[\]:!\?]+\s*", text)
     if len(punct) < len(segments):
         punct.append("")
@@ -125,7 +121,7 @@ def alpha2digit(
             punct,
             relaxed=relaxed,
             signed=signed,
-            ordinal_threshold=ordinal_threshold
+            ordinal_threshold=ordinal_threshold,
         )
     else:
         # Default
@@ -175,7 +171,7 @@ def _alpha2digit_agg(
     punct: List[Any],
     relaxed: bool,
     signed: bool,
-    ordinal_threshold: int = 3
+    ordinal_threshold: int = 3,
 ) -> str:
     """Variant for "agglutinative" languages and languages with different style
     of processing numbers, for example:
@@ -187,10 +183,15 @@ def _alpha2digit_agg(
     """
     out_segments: List[str] = []
 
-    def revert_if_alone(sentence_effective_len: int, current_sentence: List[str]) -> bool:
+    def revert_if_alone(
+        sentence_effective_len: int, current_sentence: List[str]
+    ) -> bool:
         """Test if word is 'alone' and should not be shown as number."""
         # TODO: move this to Language?
-        if sentence_effective_len == 1 and current_sentence[0].lower() in language.NEVER_IF_ALONE:
+        if (
+            sentence_effective_len == 1
+            and current_sentence[0].lower() in language.NEVER_IF_ALONE
+        ):
             return True
         else:
             return False
@@ -234,7 +235,7 @@ def _alpha2digit_agg(
                 # ... but ordinals threshold reverts number back
                 elif current_token_ordinal_org:
                     current_token_ordinal_org = None
-                    sentence[len(sentence)-1] = str(tmp_token_ordinal_org)
+                    sentence[len(sentence) - 1] = str(tmp_token_ordinal_org)
                     token_to_add = " ".join(sentence)
                     token_to_add_is_num = False
             except ValueError:
@@ -266,7 +267,7 @@ def _alpha2digit_agg(
                     token_to_add_is_num = False
             # new grouped tokens? then add and prep. next
             if token_to_add:
-                if token_to_add_is_num and revert_if_alone(len(sentence)-1, sentence):
+                if token_to_add_is_num and revert_if_alone(len(sentence) - 1, sentence):
                     token_to_add = str(sentence[0])
                     token_to_add_is_num = False
                     current_token_ordinal_org = None
@@ -310,11 +311,15 @@ def _alpha2digit_agg(
                         out_segment += language.SIGN[ot]
             elif out_tokens_ordinal_org[index] is not None:
                 # cardinal transform
-                out_segment += language.num_ord(ot, str(out_tokens_ordinal_org[index])) + " "
+                out_segment += (
+                    language.num_ord(ot, str(out_tokens_ordinal_org[index])) + " "
+                )
             elif (
                 (ot.lower() in language.DECIMAL_SEP)
-                and index > 0 and index < num_of_tokens - 1
-                and out_tokens_is_num[index - 1] and out_tokens_is_num[index + 1]
+                and index > 0
+                and index < num_of_tokens - 1
+                and out_tokens_is_num[index - 1]
+                and out_tokens_is_num[index + 1]
                 and int(out_tokens[index + 1]) < 10
             ):
                 # decimal

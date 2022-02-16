@@ -51,13 +51,11 @@ MULTIPLIERS = {
 # 1, 2, ..., 9
 UNITS: Dict[str, int] = {
     word: value
-    for value, word in enumerate(
-        "un dos tres quatre cinc sis set vuit nou".split(), 1
-    )
+    for value, word in enumerate("un dos tres quatre cinc sis set vuit nou".split(), 1)
 }
 # Unit variants
-UNITS["u"] = 1     # standard variant
-UNITS["una"] = 1   # feminine
+UNITS["u"] = 1  # standard variant
+UNITS["una"] = 1  # feminine
 UNITS["dues"] = 2  # feminine
 UNITS["huit"] = 8  # Valencian dialects
 
@@ -76,9 +74,9 @@ STENS["desset"] = 17  # dialectal variant
 STENS["dèsset"] = 17  # Valencian dialects
 STENS["devuit"] = 18  # dialectal variant
 STENS["díhuit"] = 18  # Valencian dialects
-STENS["dèneu"] = 19   # Valencian dialects
-STENS["denou"] = 19   # dialectal variant
-STENS["dènou"] = 19   # dialectal variant
+STENS["dèneu"] = 19  # Valencian dialects
+STENS["denou"] = 19  # dialectal variant
+STENS["dènou"] = 19  # dialectal variant
 
 
 # Ten multiples
@@ -142,10 +140,20 @@ COMPOSITES.update(
         "-".join((ten_word, et_word)): ten_val + et_val
         for ten_word, ten_val in MTENS.items()
         for et_word, et_val in (
-            ("i-u", 1), ("i-un", 1), ("i-una", 1),
-            ("i-dos", 2), ("i-dues", 2), ("i-tres", 3), ("i-quatre", 4),
-            ("i-cinc", 5), ("i-sis", 6), ("i-set", 7), ("i-huit", 8),
-            ("i-vuit", 8), ("i-nou", 9))
+            ("i-u", 1),
+            ("i-un", 1),
+            ("i-una", 1),
+            ("i-dos", 2),
+            ("i-dues", 2),
+            ("i-tres", 3),
+            ("i-quatre", 4),
+            ("i-cinc", 5),
+            ("i-sis", 6),
+            ("i-set", 7),
+            ("i-huit", 8),
+            ("i-vuit", 8),
+            ("i-nou", 9),
+        )
         if ten_val == 20
     }
 )

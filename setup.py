@@ -25,7 +25,7 @@ setup(
         "Natural Language :: Spanish",
         "Natural Language :: Portuguese",
         "Natural Language :: German",
-        "Natural Language :: Catalan"
+        "Natural Language :: Catalan",
     ],
     keywords="French Spanish English Portuguese German Catalan NLP words-to-numbers",
     url="https://github.com/allo-media/text2num",

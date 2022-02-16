@@ -144,16 +144,12 @@ class TestTextToNumFR(TestCase):
         self.assertEqual(alpha2digit("zéro", "fr"), "0")
 
     def test_alpha2digit_ordinals(self):
-        source = (
-            "Cinquième premier second troisième vingt et unième centième mille deux cent trentième."
-        )
+        source = "Cinquième premier second troisième vingt et unième centième mille deux cent trentième."
         expected = "5ème premier second troisième 21ème 100ème 1230ème."
         self.assertEqual(alpha2digit(source, "fr"), expected)
 
     def test_alpha2digit_all_ordinals(self):
-        source = (
-            "Cinquième premier second troisième vingt et unième centième mille deux cent trentième."
-        )
+        source = "Cinquième premier second troisième vingt et unième centième mille deux cent trentième."
         expected = "5ème 1er 2nd 3ème 21ème 100ème 1230ème."
         self.assertEqual(alpha2digit(source, "fr", ordinal_threshold=0), expected)
 

@@ -33,9 +33,7 @@ class TestTextToNumCA(TestCase):
         test1 = "cinquanta-tres mil milions dos-cents quaranta-tres mil set-cents vint-i-quatre"
         self.assertEqual(text2num(test1, "ca"), 53_000_243_724)
 
-        test2 = (
-            "cinquanta-un milions cinc-centes setanta-vuit mil tres-centes dues"
-        )
+        test2 = "cinquanta-un milions cinc-centes setanta-vuit mil tres-centes dues"
         self.assertEqual(text2num(test2, "ca"), 51_578_302)
 
         test3 = "vuitanta-cinc"
@@ -57,13 +55,14 @@ class TestTextToNumCA(TestCase):
         self.assertEqual(text2num("vuitanta", "ca"), 80)
         self.assertEqual(text2num("mil nou-cents vint", "ca"), 1920)
 
-#    No equivalent in Catalan
-#    def test_text2num_centuries(self):
-#        self.assertEqual(text2num("dix-neuf cent soixante-treize", "fr"), 1973)
+    #    No equivalent in Catalan
+    #    def test_text2num_centuries(self):
+    #        self.assertEqual(text2num("dix-neuf cent soixante-treize", "fr"), 1973)
 
     def test_text2num_exc(self):
         self.assertRaises(ValueError, text2num, "mil mil dos-cents", "ca")
-#        self.assertRaises(ValueError, text2num, "soixante quinze cent", "ca") #No equivalent in Catalan
+
+    #        self.assertRaises(ValueError, text2num, "soixante quinze cent", "ca") #No equivalent in Catalan
 
     def test_text2num_zeroes(self):
         self.assertEqual(text2num("zero", "ca"), 0)
@@ -84,15 +83,15 @@ class TestTextToNumCA(TestCase):
         expected = "1266 claus."
         self.assertEqual(alpha2digit(source, "ca"), expected)
 
-#        source = "Mille deux cents soixante-six clous."
-#        self.assertEqual(alpha2digit(source, "fr"), expected)
+        #        source = "Mille deux cents soixante-six clous."
+        #        self.assertEqual(alpha2digit(source, "fr"), expected)
 
         source = "Vuitanta-cinc = huitanta-cinc"
         expected = "85 = 85"
         self.assertEqual(alpha2digit(source, "ca"), expected)
 
-#        source = "Nonante cinq = quatre-vingt quinze"
-#        self.assertEqual(alpha2digit(source, "fr"), expected)
+        #        source = "Nonante cinq = quatre-vingt quinze"
+        #        self.assertEqual(alpha2digit(source, "fr"), expected)
 
         source = "un dos tres quatre vint quinze"
         expected = "1 2 3 4 20 15"
@@ -102,7 +101,7 @@ class TestTextToNumCA(TestCase):
         expected = "21, 31."
         self.assertEqual(alpha2digit(source, "ca"), expected)
 
-#   No equivalent in Catalan
+    #   No equivalent in Catalan
     # def test_relaxed(self):
     #     source = "un deux trois quatre vingt quinze."
     #     expected = "1 2 3 95."
@@ -144,16 +143,12 @@ class TestTextToNumCA(TestCase):
         self.assertEqual(alpha2digit("zero", "ca"), "0")
 
     def test_alpha2digit_ordinals(self):
-        source = (
-            "Cinquè primer segon tercer vint-i-unè centè mil dos-cents trentè."
-        )
+        source = "Cinquè primer segon tercer vint-i-unè centè mil dos-cents trentè."
         expected = "5è primer segon tercer 21è 100è 1230è."
         self.assertEqual(alpha2digit(source, "ca"), expected)
 
     def test_alpha2digit_all_ordinals(self):
-        source = (
-            "Cinquè primer segon tercer vint-i-unè centè mil dos-cents trentè."
-        )
+        source = "Cinquè primer segon tercer vint-i-unè centè mil dos-cents trentè."
         expected = "5è 1r 2n 3r 21è 100è 1230è."
         self.assertEqual(alpha2digit(source, "ca", ordinal_threshold=0), expected)
 
@@ -166,9 +161,7 @@ class TestTextToNumCA(TestCase):
         self.assertEqual(alpha2digit(source, "ca"), expected)
 
     def test_alpha2digit_signed(self):
-        source = (
-            "Fa més vint graus a l'interior i menys quinze a l'exterior."
-        )
+        source = "Fa més vint graus a l'interior i menys quinze a l'exterior."
         expected = "Fa +20 graus a l'interior i -15 a l'exterior."
         self.assertEqual(alpha2digit(source, "ca"), expected)
 

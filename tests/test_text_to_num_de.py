@@ -38,7 +38,9 @@ class TestTextToNumDE(TestCase):
         test1 = "dreiundfünfzig Milliarden zweihundertdreiundvierzigtausendsiebenhundertvierundzwanzig"
         self.assertEqual(text2num(test1, "de"), 53_000_243_724)
 
-        test2 = "einundfünfzig Millionen fünfhundertachtundsiebzigtausenddreihundertzwei"
+        test2 = (
+            "einundfünfzig Millionen fünfhundertachtundsiebzigtausenddreihundertzwei"
+        )
         self.assertEqual(text2num(test2, "de"), 51_578_302)
 
         test3 = "fünfundachtzig"
@@ -70,15 +72,21 @@ class TestTextToNumDE(TestCase):
         self.assertRaises(ValueError, text2num, "ein und zehn", "de")
         self.assertRaises(ValueError, text2num, "zwei und neunzehn", "de")
         self.assertRaises(ValueError, text2num, "zwanzig zweitausend", "de")
-        self.assertRaises(ValueError, text2num, "hundert und elf", "de")    # TODO: humans get this...
-        self.assertRaises(ValueError, text2num, "hundert und eins", "de")   # TODO: humans get this...
+        self.assertRaises(
+            ValueError, text2num, "hundert und elf", "de"
+        )  # TODO: humans get this...
+        self.assertRaises(
+            ValueError, text2num, "hundert und eins", "de"
+        )  # TODO: humans get this...
         self.assertRaises(ValueError, text2num, "eins und zwanzig", "de", relaxed=True)
         self.assertRaises(ValueError, text2num, "eine und zwanzig", "de", relaxed=True)
 
     def test_text2num_zeroes(self):
         self.assertEqual(text2num("null", "de"), 0)
         # Expected to fail:
-        self.assertRaises(ValueError, text2num, "null acht", "de")  # This is not allowed, use alpha2digit
+        self.assertRaises(
+            ValueError, text2num, "null acht", "de"
+        )  # This is not allowed, use alpha2digit
         self.assertRaises(ValueError, text2num, "null null hundertfünfundzwanzig", "de")
         self.assertRaises(ValueError, text2num, "fünf null", "de")
         self.assertRaises(ValueError, text2num, "fünfzignullzwei", "de")
@@ -115,7 +123,7 @@ class TestTextToNumDE(TestCase):
     def test_relaxed(self):
         # TODO: relaxed is not yet supported but 'True' by default right now
         source = "eins zwei drei vier fünf und zwanzig."
-        expected = "1 2 3 4 25."        # TODO: only humans can see the pattern ^^
+        expected = "1 2 3 4 25."  # TODO: only humans can see the pattern ^^
         self.assertEqual(alpha2digit(source, "de", relaxed=True), expected)
 
         source = "eins zwei drei vier fünf und zuletzt zwanzig."
@@ -180,9 +188,7 @@ class TestTextToNumDE(TestCase):
         self.assertEqual(result, "0")
 
     def test_alpha2digit_ordinals(self):
-        source = (
-            "erster, zweiter, dritter, vierter, fünfter, sechster, siebter, achter, neunter."
-        )
+        source = "erster, zweiter, dritter, vierter, fünfter, sechster, siebter, achter, neunter."
         expected = "1., 2., 3., 4., 5., 6., 7., 8., 9.."
         self.assertEqual(alpha2digit(source, "de", ordinal_threshold=0), expected)
 
@@ -267,7 +273,9 @@ class TestTextToNumDE(TestCase):
 
     def test_one_as_noun_or_article(self):
         source = "Ich nehme eins. Eins passt nicht!"
-        expected = "Ich nehme 1. 1 passt nicht!"    # TODO: this is ambiguous - acceptable?
+        expected = (
+            "Ich nehme 1. 1 passt nicht!"  # TODO: this is ambiguous - acceptable?
+        )
         self.assertEqual(alpha2digit(source, "de"), expected)
         source = "Velma hat eine Spur"
         self.assertEqual(alpha2digit(source, "de"), source)

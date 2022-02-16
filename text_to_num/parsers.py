@@ -373,7 +373,9 @@ class WordStreamValueParserGerman(WordStreamValueParserInterface):
                         "invalid 'and' group for text2num: {}".format(repr(ng))
                     )
 
-                and_sum_eq = "(" + str(first_summand_num) + " + " + str(second_summand_num) + ")"
+                and_sum_eq = (
+                    "(" + str(first_summand_num) + " + " + str(second_summand_num) + ")"
+                )
                 # Is there already a hundreds value in the equation?
                 if equation == "":
                     equation += and_sum_eq
@@ -455,19 +457,25 @@ class WordStreamValueParserGerman(WordStreamValueParserInterface):
                         factor = German.NUMBER_DICT_GER[ng[len(ng) - 2]]
                         if len(equation_results) > 0:
                             # This prevents things like "zwei zweitausend" (DE) to become 4000
-                            raise ValueError("invalid literal for text2num: {}".format(repr(ng)))
+                            raise ValueError(
+                                "invalid literal for text2num: {}".format(repr(ng))
+                            )
                         if factor and factor >= 1 and factor <= 90:
-                            multiply_eq = "(" + str(factor) + " * " + str(multiplier) + ")"
+                            multiply_eq = (
+                                "(" + str(factor) + " * " + str(multiplier) + ")"
+                            )
                             if equation == "":
                                 equation += multiply_eq
                             else:
-                                equation += (" * " + multiply_eq)
+                                equation += " * " + multiply_eq
                             equation_results.append(factor * multiplier)
                             ng.pop(len(ng) - 1)
                             processed_a_part = True
                         else:
                             # I think we should fail here instead of ignore?
-                            raise ValueError("invalid literal for text2num: {}".format(repr(ng)))
+                            raise ValueError(
+                                "invalid literal for text2num: {}".format(repr(ng))
+                            )
                     else:
                         multiply_eq = "(" + str(multiplier) + ")"
                         if equation == "":
@@ -489,7 +497,9 @@ class WordStreamValueParserGerman(WordStreamValueParserInterface):
             else:
                 # at this point there should not be any more number parts
                 raise ValueError(
-                    "invalid literal for text2num - group {} in {}".format(repr(num_groups), text)
+                    "invalid literal for text2num - group {} in {}".format(
+                        repr(num_groups), text
+                    )
                 )
 
             # Any sub-equation that results to 0 and is not the first sub-equation means an error

@@ -52,13 +52,17 @@ class TestTextToNumES(TestCase):
         self.assertEqual(text2num("dos mil", "es"), 2000)
         self.assertEqual(text2num("dos mil noventa y nueve", "es"), 2099)
         self.assertEqual(text2num("nueve mil novecientos noventa y nueve", "es"), 9999)
-        self.assertEqual(text2num("novecientos noventa y nueve mil novecientos noventa y nueve", "es"),
-                         999999)
+        self.assertEqual(
+            text2num(
+                "novecientos noventa y nueve mil novecientos noventa y nueve", "es"
+            ),
+            999999,
+        )
         long_text = "novecientos noventa y nueve mil novecientos noventa y nueve millones novecientos noventa y nueve mil novecientos noventa y nueve"
         self.assertEqual(text2num(long_text, "es"), 999999999999)
 
-        self.assertEqual(alpha2digit("uno coma uno", "es"), '1.1')
-        self.assertEqual(alpha2digit("uno coma cuatrocientos uno", "es"), '1.401')
+        self.assertEqual(alpha2digit("uno coma uno", "es"), "1.1")
+        self.assertEqual(alpha2digit("uno coma cuatrocientos uno", "es"), "1.401")
 
         # TODO:
         # self.assertEqual(alpha2digit("cero coma cinco", "es"), '0.5')
@@ -66,9 +70,7 @@ class TestTextToNumES(TestCase):
         test1 = "cincuenta y tres mil veinte millones doscientos cuarenta y tres mil setecientos veinticuatro"
         self.assertEqual(text2num(test1, "es"), 53_020_243_724)
 
-        test2 = (
-            "cincuenta y un millones quinientos setenta y ocho mil trescientos dos"
-        )
+        test2 = "cincuenta y un millones quinientos setenta y ocho mil trescientos dos"
         self.assertEqual(text2num(test2, "es"), 51_578_302)
 
         test3 = "ochenta y cinco"

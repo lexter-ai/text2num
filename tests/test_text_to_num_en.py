@@ -127,9 +127,7 @@ class TestTextToNumEN(TestCase):
         self.assertEqual(alpha2digit("zero", "en"), "0")
 
     def test_alpha2digit_ordinals(self):
-        source = (
-            "Fifth third second twenty-first hundredth one thousand two hundred thirtieth twenty-fifth thirty-eighth forty-ninth."
-        )
+        source = "Fifth third second twenty-first hundredth one thousand two hundred thirtieth twenty-fifth thirty-eighth forty-ninth."
         expected = "5th third second 21st 100th 1230th 25th 38th 49th."
         self.assertEqual(alpha2digit(source, "en"), expected)
         source = (
@@ -166,7 +164,9 @@ class TestTextToNumEN(TestCase):
 
     def test_one_as_noun_or_article(self):
         source = "This is the one I'm looking for. One moment please! Twenty one cats. One two three four!"
-        expected = "This is the one I'm looking for. One moment please! 21 cats. 1 2 3 4!"
+        expected = (
+            "This is the one I'm looking for. One moment please! 21 cats. 1 2 3 4!"
+        )
         self.assertEqual(alpha2digit(source, "en"), expected)
         source = "No one is innocent. Another one bites the dust."
         self.assertEqual(alpha2digit(source, "en"), source)

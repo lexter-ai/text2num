@@ -57,8 +57,8 @@ UNITS: Dict[str, int] = {
     )
 }
 # Unit variants
-UNITS["ein"] = 1    # TODO: use that this can be followed only by "100", "1000", "und"
-UNITS["eine"] = 1   # TODO: use that this can be followed only by multipliers > 1000
+UNITS["ein"] = 1  # TODO: use that this can be followed only by "100", "1000", "und"
+UNITS["eine"] = 1  # TODO: use that this can be followed only by multipliers > 1000
 
 # Single tens are terminals (see Rules)
 STENS: Dict[str, int] = {
@@ -97,13 +97,15 @@ AND = "und"
 ZERO = {"null"}
 
 # Sort all numbers by length and start with the longest (we keep dict structure)
-ALL_WORDS_SORTED_REVERSE = dict(sorted(
-    # add "und" and "null" to NUMBERS
-    {"und": None, "null": 0, **NUMBERS}.items(),
-    # take reverse length of keys to sort
-    key=lambda kv: len(kv[0]),
-    reverse=True
-))
+ALL_WORDS_SORTED_REVERSE = dict(
+    sorted(
+        # add "und" and "null" to NUMBERS
+        {"und": None, "null": 0, **NUMBERS}.items(),
+        # take reverse length of keys to sort
+        key=lambda kv: len(kv[0]),
+        reverse=True,
+    )
+)
 
 
 class German(Language):
@@ -115,9 +117,9 @@ class German(Language):
     ORDINALS_FIXED_GER = {
         "erste": "eins",
         "dritte": "drei",
-        "sechste": "sechs",     # we need this because it ends with "s" ^^
+        "sechste": "sechs",  # we need this because it ends with "s" ^^
         "siebte": "sieben",
-        "achte": "acht"
+        "achte": "acht",
     }
     LARGE_ORDINAL_SUFFIXES_GER = r"^(ster|stes|sten|ste)(\s|$)"  # RegEx for ord. > 19
 
@@ -152,14 +154,14 @@ class German(Language):
             word_base = None
             # example transf.: zwanzigster -> zwanzigste -> zwanzigs -> zwanzig
             if word.endswith("ter") or word.endswith("tes") or word.endswith("ten"):
-                word_base = word[:-1].lower()       # e.g. erster -> erste
+                word_base = word[:-1].lower()  # e.g. erster -> erste
             elif word.endswith("te"):
                 word_base = word.lower()
             if word_base:
                 if word_base in self.ORDINALS_FIXED_GER:
                     return self.ORDINALS_FIXED_GER[word_base]
                 else:
-                    word_base = word_base[:-2]      # e.g. vierte -> vier
+                    word_base = word_base[:-2]  # e.g. vierte -> vier
                     if word_base.endswith("s"):
                         word_base = word_base[:-1]  # e.g. zwanzigs -> zwanzig
                     if word_base in self.NUMBER_DICT_GER:
@@ -204,7 +206,7 @@ class German(Language):
                         result += invalid_word + " "
                         invalid_word = ""
                     result += sw + " "
-                    text = text[len(sw):]
+                    text = text[len(sw) :]
                     found = True
                     break
             # current beginning could not be assigned to a word:
